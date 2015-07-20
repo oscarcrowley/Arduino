@@ -1,0 +1,175 @@
+#include <Charliplexing.h>
+#include <Figure.h>
+#include <Font.h>
+#include <Myfont.h>
+
+
+int GREEN = 12;
+int RED = 11;
+int YELLOW = 8;
+int BUTTON = 4;
+int SOUND = 7;
+
+int buttonPushCounter = 0;
+int buttonState = 0;
+int lastButtonState = 0;
+int timeCounter = 0;
+int clickCounter = 0;
+
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin 13 as an output.
+  pinMode(GREEN, OUTPUT);
+  pinMode(RED, OUTPUT);
+  pinMode(YELLOW, OUTPUT);
+  pinMode(BUTTON,INPUT);
+  pinMode(SOUND, INPUT);
+  Serial.begin(9600);
+}
+
+void checkSoundInput() {
+  if (buttonPushCounter > 0) {
+    
+    clickCounter++;
+  }
+  
+  buttonPushCounter = 0;
+}
+
+void checkClicks() {
+  
+  if (clickCounter > 2){
+    
+    digitalWrite(GREEN,HIGH);
+    digitalWrite(YELLOW,LOW);
+    
+  } else if (clickCounter > 1){
+    
+    digitalWrite(YELLOW,HIGH);
+    digitalWrite(GREEN,LOW);
+  } 
+
+  clickCounter = 0;
+}
+
+void loop() {
+
+  static int clickerTimer = 0;
+
+  delay(20);
+  if(digitalRead(SOUND) == HIGH){
+    buttonPushCounter++;
+  }
+
+  timeCounter++;
+  clickerTimer++;
+
+  if ((timeCounter % 5) == 0) {
+    checkSoundInput();
+  }
+
+  if (clickCounter > 0){
+    digitalWrite(RED,HIGH);
+  }else{
+    digitalWrite(RED,LOW);
+    clickerTimer = 0;
+  }
+
+  if (clickerTimer > 60) {
+    clickerTimer = 0;
+    checkClicks();
+  }
+}
+  
+
+  /*buttonState = digitalRead(SOUND); 
+  if (buttonState != lastButtonState)
+  {
+    
+    if (buttonState == HIGH){
+      buttonPushCounter++;
+  }
+
+  lastButtonState = buttonState;
+
+  if (buttonPushCounter == 1){
+    digitalWrite(RED,HIGH);
+    delay(50);
+    digitalWrite(RED,LOW);
+  }else{
+    digitalWrite(RED,LOW);
+  }
+  delay(50);
+
+  if (buttonPushCounter == 2){
+    digitalWrite(YELLOW,HIGH);
+    delay(50);
+    digitalWrite(YELLOW,LOW);
+  }else{
+    digitalWrite(YELLOW,LOW);
+  }
+  delay(50);
+
+  if (buttonPushCounter == 3){
+    digitalWrite(GREEN,HIGH);
+    delay(50);
+    digitalWrite(GREEN,LOW);
+  }else{
+    digitalWrite(GREEN,LOW);
+  }
+  delay(50);
+
+  if (buttonPushCounter >= 4){
+    buttonPushCounter = 0;
+  }
+
+  }*/
+
+
+  
+
+/*if(digitalRead(SOUND) == HIGH){
+  digitalWrite(RED,HIGH);
+  delay(20);
+  digitalWrite(RED,LOW);
+  delay(20);
+  digitalWrite(YELLOW,HIGH);
+  delay(20);
+  digitalWrite(YELLOW,LOW);
+  delay(20);
+  digitalWrite(GREEN,HIGH);
+  delay(20);
+  digitalWrite(GREEN,LOW);
+  delay(20);
+  //digitalWrite(GREEN,HIGH);
+  delay(20);
+  digitalWrite(GREEN,LOW);
+  delay(20);
+  digitalWrite(YELLOW,HIGH);
+  delay(20);
+  digitalWrite(YELLOW,LOW);
+  delay(20);
+  digitalWrite(RED,HIGH);
+  delay(20);
+  digitalWrite(RED,LOW);
+}else{
+  digitalWrite(RED,LOW);
+  digitalWrite(YELLOW,LOW);
+  digitalWrite(GREEN,LOW);
+}*/
+
+  //TRAFFIC LIGHTS
+  /*if(digitalRead(BUTTON) == HIGH){
+  digitalWrite(RED,HIGH);
+  delay(4000);
+  digitalWrite(YELLOW,HIGH);
+  delay(1000);
+  digitalWrite(RED,LOW);
+  digitalWrite(YELLOW,LOW);
+  digitalWrite(GREEN, HIGH);
+  delay(4000);
+  digitalWrite(GREEN,LOW);
+  digitalWrite(YELLOW,HIGH);
+  delay(1000);
+  digitalWrite(YELLOW,LOW);
+  }*/
