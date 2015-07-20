@@ -1,0 +1,30 @@
+int GREEN = 12;
+int RED = 11;
+int YELLOW = 8;
+int RED_TEST = 2;
+int BUTTON = 4;
+int SOUND = 7;
+
+void setup() {
+  pinMode(GREEN, OUTPUT);
+  pinMode(RED, OUTPUT);
+  pinMode(YELLOW, OUTPUT);
+  pinMode(BUTTON,INPUT);
+  pinMode(SOUND, INPUT);
+
+}
+
+void loop() {
+  boolean soundstate = digitalRead(SOUND);
+  if (soundstate == 1) {
+    analogWrite(GREEN, 255);
+    analogWrite(YELLOW, 255);
+    analogWrite(RED, 255);
+  } else {
+    analogWrite(GREEN, 0);
+    analogWrite(YELLOW, 0);
+    analogWrite(RED, 0);
+  }
+  
+
+}
